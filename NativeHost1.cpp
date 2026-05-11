@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <stack>
 #include <nlohmann/json.hpp>
@@ -15,7 +15,7 @@ using json = nlohmann::json;
 // --- ProcessAudit implementation ---
 json ProcessAudit(const std::string& input) {
     int n = static_cast<int>(input.length());
-    if (n == 0) return {{"matrix", {}}, {"blocks", {}}, {"checksum", 0}};
+    if (n == 0) return {{"matrix", {}}, {"checksum", 0}};
 
     std::vector<boost::dynamic_bitset<uint32_t>> tc(n, boost::dynamic_bitset<uint32_t>(n));
     std::stack<int> st;
@@ -34,23 +34,18 @@ json ProcessAudit(const std::string& input) {
 
     unsigned long crc = crc32(0L, Z_NULL, 0);
     std::vector<std::string> rows;
-    std::vector<std::vector<uint32_t>> allBlocks;
-
     for (int i = 0; i < n; ++i) {
         std::string s;
         boost::to_string(tc[i], s);
         std::reverse(s.begin(), s.end());
         rows.push_back(s);
-
         std::vector<uint32_t> blocks(tc[i].num_blocks());
         boost::to_block_range(tc[i], blocks.begin());
-        allBlocks.push_back(blocks);
-
         crc = crc32(crc, (const unsigned char*)blocks.data(), (unsigned int)blocks.size() * 4);
     }
-
-    return {{"matrix", rows}, {"blocks", allBlocks}, {"checksum", crc}};
+    return {{"matrix", rows}, {"checksum", crc}};
 }
+
 int main() {
 #ifdef _WIN32
     _setmode(_fileno(stdin), _O_BINARY);

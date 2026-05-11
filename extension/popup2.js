@@ -16,21 +16,17 @@ const crcTable = (() => {
 })();
 
 // Verify CRC against expected
-function verifyCRC(blocks, expected) {
-    let crc = 0xFFFFFFFF;
-    blocks.forEach(arr => {
-        arr.forEach(val => {
-            // process 4 bytes of each uint32_t
-            for (let k = 0; k < 4; k++) {
-                const byte = (val >>> (k * 8)) & 0xFF;
-                crc = (crc >>> 8) ^ crcTable[(crc ^ byte) & 0xFF];
-            }
-        });
+function verifyCRC(matrix, expected) {
+    let crc = 0xFFFFFFFF; // start with all bits set
+    matrix.forEach(row => {
+        for (let i = 0; i < row.length; i++) {
+            const code = row.charCodeAt(i);
+            crc = (crc >>> 8) ^ crcTable[(crc ^ code) & 0xFF];
+        }
     });
-    crc = (crc ^ 0xFFFFFFFF) >>> 0;
+    crc = (crc ^ 0xFFFFFFFF) >>> 0; // finalize
     return crc === expected;
 }
-
 
 
 function render(matrix) {
@@ -47,18 +43,12 @@ function render(matrix) {
 }
 
 input.addEventListener('input', () => {
-chrome.runtime.sendNativeMessage('com.bracket.audit', { text: input.value }, (res) => {
-    if (chrome.runtime.lastError) {
-        console.error('Native messaging error:', chrome.runtime.lastError.message);
-        document.getElementById('status').innerText = "Host error ❌";
-        return;
-    }
-    if (res && res.matrix && res.blocks) {
-        const ok = verifyCRC(res.blocks, res.checksum);
-        document.getElementById('status').innerText = ok ? "Verified ✅" : "CRC Error ❌";
-        render(res.matrix);
-    }
-});
+    chrome.runtime.sendNativeMessage('com.bracket.audit', {text: input.value}, (res) => {
+        if (res && res.matrix) {
+            document.getElementById('status').innerText = verifyCRC(res.matrix, res.checksum) ? "Verified ✅" : "CRC Error ❌";
+            render(res.matrix);
+        }
+    });
 });
 
 document.getElementById('export').onclick = () => {
