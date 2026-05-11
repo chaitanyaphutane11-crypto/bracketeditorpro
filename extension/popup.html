@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; width: 420px; padding: 15px; }
+    textarea { width: 100%; height: 80px; background: #252526; color: #fff; border: 1px solid #3e3e42; resize: none; margin-bottom: 10px; }
+    canvas { background: #000; border: 1px solid #3e3e42; display: block; margin-bottom: 10px; }
+    .footer { display: flex; justify-content: space-between; font-size: 12px; }
+    button { background: #007acc; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h3>Bracket Auditor Pro</h3>
+  <textarea id="input" placeholder="Type brackets (e.g. {([])})"></textarea>
+  <canvas id="heatmap" width="390" height="200"></canvas>
+  <div class="footer">
+    <span id="status">Ready</span>
+    <button id="export">Export PNG</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
