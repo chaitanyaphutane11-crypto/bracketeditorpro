@@ -1,0 +1,9 @@
+{
+  "name": "com.bracket.audit",
+  "description": "Bracket Auditor Native Host",
+  "path": "C:\\BracketAuditorPro\\build\\NativeHost.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://neoadimnihenpaphbkojfagicdlgjipm/"
+  ]
+}

@@ -1,0 +1,10 @@
+﻿{
+  "name": "bracket-auditor-pro",
+  "version": "1.0.0",
+  "dependencies": [
+    "boost-asio",
+    "boost-dynamic-bitset",
+    "nlohmann-json",
+    "zlib"
+  ]
+}
