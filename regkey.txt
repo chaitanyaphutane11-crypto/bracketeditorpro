@@ -1,0 +1,29 @@
+PS C:\Windows\system32> # Define host name and manifest path
+PS C:\Windows\system32> $hostName = "com.bracket.audit"
+PS C:\Windows\system32> $manifestPath = "C:\BracketAuditorPro\com.bracket.audit.json"
+PS C:\Windows\system32>
+PS C:\Windows\system32> # Create the registry key for Chrome (current user)
+PS C:\Windows\system32> New-Item -Path "HKCU:\Software\Google\Chrome\NativeMessagingHosts\$hostName" -Force
+
+
+    Hive: HKEY_CURRENT_USER\Software\Google\Chrome\NativeMessagingHosts
+
+
+Name                           Property
+----                           --------
+com.bracket.audit
+
+
+PS C:\Windows\system32>
+PS C:\Windows\system32> # Set the default value to the manifest path
+PS C:\Windows\system32> Set-ItemProperty -Path "HKCU:\Software\Google\Chrome\NativeMessagingHosts\$hostName" `
+>>     -Name "(default)" -Value $manifestPath
+PS C:\Windows\system32> New-Item -Path "HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.bracket.audit" -Force
+
+
+    Hive: HKEY_CURRENT_USER\Software\Google\Chrome\NativeMessagingHosts
+
+
+Name                           Property
+----                           --------
+com.bracket.audit
