@@ -1,0 +1,8 @@
+PS C:\Windows\system32> cmake --build C:\BracketAuditorPro\build
+ninja: no work to do.
+PS C:\Windows\system32> cmake -S C:\BracketAuditorPro -B C:\BracketAuditorPro\build `
+>>     -DCMAKE_TOOLCHAIN_FILE=C:\BracketAuditorPro\vcpkg\scripts\buildsystems\vcpkg.cmake `
+>>     -DCMAKE_BUILD_TYPE=Release `
+>>     -G "Ninja" `
+>>     -DCMAKE_C_COMPILER=gcc `
+>>     -DCMAKE_CXX_COMPILER=g++
